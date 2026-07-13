@@ -1,16 +1,14 @@
-## Hi there 👋
+# 🪐 Welcome to the Control Room
 
-<!--
-**tinathedog62-droid/tinathedog62-droid** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME_HERE&show_icons=true&theme=tokyonight&hide_border=true&bg_color=1a1a1f&title_color=5294e2&icon_color=5294e2&text_color=e3e3e6" height="150" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_USERNAME_HERE&layout=compact&theme=tokyonight&hide_border=true&bg_color=1a1a1f&title_color=73a9eb&text_color=e3e3e6" height="150" />
+</p>
 
-Here are some ideas to get you started:
+---
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+### 💻 Current Tech Stack Setup
+```mexican
+   🎛️ Frontend:   HTML5 / CSS3 Grid Canvas Matrix / JavaScript ES6+
+   🦀 Backend:    Rust Core / Tauri v2 Native System API Binding
+   ⚡ Compute:    Low-level WebAssembly (WASM) Real-Time DSP Pipelines
