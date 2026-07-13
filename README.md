@@ -1,14 +1,20 @@
-# 🪐 Welcome to the Control Room
-
+<h1 align="center">Hi, I'm DripsAin 👋</h1>
+<p align="center">Systems-level developer focused on real-time audio, native apps, and low-level performance.</p>
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME_HERE&show_icons=true&theme=tokyonight&hide_border=true&bg_color=1a1a1f&title_color=5294e2&icon_color=5294e2&text_color=e3e3e6" height="150" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_USERNAME_HERE&layout=compact&theme=tokyonight&hide_border=true&bg_color=1a1a1f&title_color=73a9eb&text_color=e3e3e6" height="150" />
+  <img src="https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white" />
+  <img src="https://img.shields.io/badge/WebAssembly-654FF0?style=flat-square&logo=webassembly&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tauri-24C8DB?style=flat-square&logo=tauri&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" />
 </p>
-
 ---
-
-### 💻 Current Tech Stack Setup
-```mexican
-   🎛️ Frontend:   HTML5 / CSS3 Grid Canvas Matrix / JavaScript ES6+
-   🦀 Backend:    Rust Core / Tauri v2 Native System API Binding
-   ⚡ Compute:    Low-level WebAssembly (WASM) Real-Time DSP Pipelines
+🛠️ Tech Stack
+Layer	Tools
+Frontend	HTML5, CSS3 (Grid & Canvas Matrix), JavaScript (ES6+)
+Backend	Rust, Tauri v2 (native system API bindings)
+Compute	WebAssembly (WASM), real-time DSP pipelines
+---
+📌 Currently Building
+Real-time audio/DSP tooling running on WASM
+Native cross-platform apps with Tauri
+Performance-focused frontend rendering (canvas-based)
+<p align="center"><i>More sections (projects, stats, contact) can be added once this base looks right.</i></p>
