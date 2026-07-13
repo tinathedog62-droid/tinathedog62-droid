@@ -1,0 +1,101 @@
+<svg fill="none" viewBox="0 0 800 250" width="800" height="250" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject width="100%" height="100%">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <style>
+        .container {
+          font-family: 'Segoe UI', system-ui, sans-serif;
+          background: radial-gradient(circle at 80% 20%, #150f30 0%, #070714 100%);
+          width: 800px;
+          height: 250px;
+          border-radius: 10px;
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          padding-left: 40px;
+          box-sizing: border-box;
+          border: 1px solid rgba(86, 99, 246, 0.2);
+        }
+
+        /* Slow-moving cosmic glow background */
+        .nebula {
+          position: absolute;
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, rgba(37, 38, 221, 0.4) 0%, rgba(138, 43, 226, 0.1) 70%, transparent 100%);
+          top: -50px;
+          right: -50px;
+          animation: drift 20s ease-in-out infinite alternate;
+        }
+
+        /* Abstract ambient moving grid elements */
+        .grid-line {
+          position: absolute;
+          background: linear-gradient(90deg, transparent, rgba(58, 112, 255, 0.15), transparent);
+          height: 1px;
+          width: 100%;
+          left: 0;
+          animation: scanLine 8s linear infinite;
+        }
+
+        .particle {
+          position: absolute;
+          background: rgba(86, 175, 255, 0.6);
+          border-radius: 50%;
+          animation: floatUp 12s linear infinite;
+        }
+
+        .title {
+          font-size: 32px;
+          font-weight: 800;
+          color: #ffffff;
+          margin: 0;
+          letter-spacing: -0.5px;
+          z-index: 10;
+        }
+
+        .subtitle {
+          font-size: 16px;
+          color: #8fa0dd;
+          margin-top: 8px;
+          font-weight: 400;
+          z-index: 10;
+          font-family: 'Courier New', Courier, monospace;
+        }
+
+        @keyframes drift {
+          0% { transform: translate(0, 0) scale(1); }
+          100% { transform: translate(-80px, 40px) scale(1.2); }
+        }
+
+        @keyframes scanLine {
+          0% { top: 0%; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { top: 100%; opacity: 0; }
+        }
+
+        @keyframes floatUp {
+          0% { transform: translateY(260px) translateX(0); opacity: 0; }
+          10% { opacity: 0.8; }
+          90% { opacity: 0.8; }
+          100% { transform: translateY(-20px) translateX(30px); opacity: 0; }
+        }
+      </style>
+
+      <div class="container">
+        <div class="nebula"></div>
+        <div class="grid-line"></div>
+        <div class="particle" style="width:4px; height:4px; left:20%; animation-delay:1s; animation-duration:14s;"></div>
+        <div class="particle" style="width:6px; height:6px; left:45%; animation-delay:4s; animation-duration:18s;"></div>
+        <div class="particle" style="width:3px; height:3px; left:70%; animation-delay:0s; animation-duration:11s;"></div>
+        <div class="particle" style="width:5px; height:5px; left:85%; animation-delay:7s; animation-duration:15s;"></div>
+        
+        <div>
+          <h1 class="title">🌌 Welcome to the Control Room</h1>
+          <div class="subtitle">Executing: Main.Systems.Initialize()</div>
+        </div>
+      </div>
+    </div>
+  </foreignObject>
+</svg>
