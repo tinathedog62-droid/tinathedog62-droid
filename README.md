@@ -1,20 +1,25 @@
-<h1 align="center">Hi, I'm DripsAin 👋</h1>
-<p align="center">Systems-level developer focused on real-time audio, native apps, and low-level performance.</p>
-<p align="center">
-  <img src="https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white" />
-  <img src="https://img.shields.io/badge/WebAssembly-654FF0?style=flat-square&logo=webassembly&logoColor=white" />
-  <img src="https://img.shields.io/badge/Tauri-24C8DB?style=flat-square&logo=tauri&logoColor=white" />
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" />
-</p>
+<div align="center">
+  <img src="./assets/v1-header.svg" width="100%" alt="DripsAin Control Room Header"/>
+
+  # 🪐 Welcome to the Control Room
+
+  *"through out all coders and developers, i am the sane one."*
+</div>
+
 ---
-🛠️ Tech Stack
-Layer	Tools
-Frontend	HTML5, CSS3 (Grid & Canvas Matrix), JavaScript (ES6+)
-Backend	Rust, Tauri v2 (native system API bindings)
-Compute	WebAssembly (WASM), real-time DSP pipelines
+
+### 💻 Current Tech Stack Setup
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | HTML5 / CSS3 Grid Canvas Matrix / JavaScript ES6+ |
+| **Backend** | Rust Core / Tauri v2 Native System API Binding |
+| **Compute** | Low-level WebAssembly (WASM) Real-Time DSP Pipelines |
+
 ---
-📌 Currently Building
-Real-time audio/DSP tooling running on WASM
-Native cross-platform apps with Tauri
-Performance-focused frontend rendering (canvas-based)
-<p align="center"><i>More sections (projects, stats, contact) can be added once this base looks right.</i></p>
+
+### 📡 Broadcast Network (YouTube)
+[![DripZain](https://img.shields.io/badge/Main-DripZain-3B14A7?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@DripZain)
+[![dripsAinVod](https://img.shields.io/badge/VODs-dripsAinVod-2A0845?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@dripsAinVod)
+[![recycledyesus](https://img.shields.io/badge/Alt-recycledyesus-4D21FA?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@recycledyesus)
+[![Bruu-q4b](https://img.shields.io/badge/Archive-Bruu--q4b-1A0B2E?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@Bruu-q4b)
