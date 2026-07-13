@@ -1,100 +1,217 @@
-<svg fill="none" viewBox="0 0 800 250" width="800" height="250" xmlns="http://www.w3.org/2000/svg">
+<svg fill="none" viewBox="0 0 1000 400" width="1000" height="400" xmlns="http://www.w3.org/2000/svg">
   <foreignObject width="100%" height="100%">
     <div xmlns="http://www.w3.org/1999/xhtml">
       <style>
-        .container {
-          font-family: 'Segoe UI', system-ui, sans-serif;
-          background: radial-gradient(circle at 80% 20%, #150f30 0%, #070714 100%);
-          width: 800px;
-          height: 250px;
-          border-radius: 10px;
+        :root {
+          --bg-base: #060713;
+          --grid-color: rgba(58, 112, 255, 0.07);
+          --neon-blue: #3a70ff;
+          --deep-purple: #4a2b9a;
+          --accent-violet: #8a2be2;
+          --text-main: #e2e8f0;
+          --text-dim: #64748b;
+        }
+
+        .hud-container {
+          font-family: 'Consolas', 'Courier New', monospace;
+          background: linear-gradient(135deg, var(--bg-base) 0%, #0a0b1e 100%);
+          width: 1000px;
+          height: 400px;
           position: relative;
           overflow: hidden;
-          display: flex;
-          align-items: center;
-          padding-left: 40px;
           box-sizing: border-box;
-          border: 1px solid rgba(86, 99, 246, 0.2);
+          border: 1px solid rgba(58, 112, 255, 0.3);
+          border-radius: 12px;
+          box-shadow: inset 0 0 60px rgba(74, 43, 154, 0.2);
         }
 
-        /* Slow-moving cosmic glow background */
-        .nebula {
+        /* Slow ambient light shifts */
+        .ambient-core {
           position: absolute;
-          width: 300px;
-          height: 300px;
-          background: radial-gradient(circle, rgba(37, 38, 221, 0.4) 0%, rgba(138, 43, 226, 0.1) 70%, transparent 100%);
-          top: -50px;
-          right: -50px;
-          animation: drift 20s ease-in-out infinite alternate;
-        }
-
-        /* Abstract ambient moving grid elements */
-        .grid-line {
-          position: absolute;
-          background: linear-gradient(90deg, transparent, rgba(58, 112, 255, 0.15), transparent);
-          height: 1px;
-          width: 100%;
-          left: 0;
-          animation: scanLine 8s linear infinite;
-        }
-
-        .particle {
-          position: absolute;
-          background: rgba(86, 175, 255, 0.6);
+          width: 600px;
+          height: 600px;
+          background: radial-gradient(circle, rgba(74, 43, 154, 0.15) 0%, rgba(58, 112, 255, 0.05) 40%, transparent 70%);
+          top: -100px;
+          right: -100px;
           border-radius: 50%;
-          animation: floatUp 12s linear infinite;
+          animation: corePulse 25s ease-in-out infinite alternate;
+        }
+
+        .ambient-node {
+          position: absolute;
+          width: 400px;
+          height: 400px;
+          background: radial-gradient(circle, rgba(58, 112, 255, 0.1) 0%, transparent 60%);
+          bottom: -150px;
+          left: -100px;
+          border-radius: 50%;
+          animation: nodeDrift 30s ease-in-out infinite alternate;
+        }
+
+        /* Massive Blueprint Grid */
+        .grid-layer {
+          position: absolute;
+          width: 200%;
+          height: 200%;
+          background-image: 
+            linear-gradient(var(--grid-color) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+          background-size: 40px 40px;
+          transform: perspective(600px) rotateX(45deg) translateY(-100px) translateZ(-200px);
+          animation: gridSlowMove 40s linear infinite;
+        }
+
+        /* Complex HUD Overlays */
+        .hud-frame {
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          right: 20px;
+          bottom: 20px;
+          border: 1px solid rgba(138, 43, 226, 0.2);
+          pointer-events: none;
+        }
+
+        .hud-corner {
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          border-color: var(--neon-blue);
+          border-style: solid;
+        }
+        .tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+        .tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+        .bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+        .br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+        /* Data Particles */
+        .data-stream {
+          position: absolute;
+          width: 2px;
+          background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
+          opacity: 0.5;
+        }
+
+        /* Typography & Content Layout */
+        .content-wrapper {
+          position: absolute;
+          top: 60px;
+          left: 60px;
+          z-index: 10;
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .sys-badge {
+          display: inline-block;
+          padding: 4px 12px;
+          background: rgba(58, 112, 255, 0.1);
+          border: 1px solid var(--neon-blue);
+          color: var(--neon-blue);
+          font-size: 12px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          width: fit-content;
         }
 
         .title {
-          font-size: 32px;
-          font-weight: 800;
+          font-size: 48px;
+          font-weight: 900;
           color: #ffffff;
           margin: 0;
-          letter-spacing: -0.5px;
-          z-index: 10;
+          letter-spacing: -1px;
+          font-family: 'Segoe UI', sans-serif;
+          text-shadow: 0 0 20px rgba(58, 112, 255, 0.5);
         }
 
         .subtitle {
-          font-size: 16px;
-          color: #8fa0dd;
-          margin-top: 8px;
-          font-weight: 400;
-          z-index: 10;
-          font-family: 'Courier New', Courier, monospace;
+          font-size: 18px;
+          color: var(--accent-violet);
+          margin: 0;
         }
 
-        @keyframes drift {
-          0% { transform: translate(0, 0) scale(1); }
-          100% { transform: translate(-80px, 40px) scale(1.2); }
+        .terminal-block {
+          margin-top: 30px;
+          background: rgba(0, 0, 0, 0.4);
+          border-left: 3px solid var(--deep-purple);
+          padding: 15px 20px;
+          width: 500px;
         }
 
-        @keyframes scanLine {
-          0% { top: 0%; opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { top: 100%; opacity: 0; }
+        .terminal-text {
+          color: var(--text-main);
+          font-size: 14px;
+          line-height: 1.6;
         }
 
-        @keyframes floatUp {
-          0% { transform: translateY(260px) translateX(0); opacity: 0; }
-          10% { opacity: 0.8; }
-          90% { opacity: 0.8; }
-          100% { transform: translateY(-20px) translateX(30px); opacity: 0; }
+        .terminal-text span {
+          color: var(--neon-blue);
+        }
+
+        /* Slow Animations */
+        @keyframes corePulse {
+          0% { transform: scale(1) translate(0, 0); }
+          100% { transform: scale(1.3) translate(-50px, 50px); }
+        }
+        @keyframes nodeDrift {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(100px, -80px); }
+        }
+        @keyframes gridSlowMove {
+          0% { transform: perspective(600px) rotateX(60deg) translateY(0) translateZ(-200px); }
+          100% { transform: perspective(600px) rotateX(60deg) translateY(40px) translateZ(-200px); }
+        }
+        @keyframes dataFall {
+          0% { transform: translateY(-100%); opacity: 0; }
+          50% { opacity: 0.8; }
+          100% { transform: translateY(400px); opacity: 0; }
         }
       </style>
 
-      <div class="container">
-        <div class="nebula"></div>
-        <div class="grid-line"></div>
-        <div class="particle" style="width:4px; height:4px; left:20%; animation-delay:1s; animation-duration:14s;"></div>
-        <div class="particle" style="width:6px; height:6px; left:45%; animation-delay:4s; animation-duration:18s;"></div>
-        <div class="particle" style="width:3px; height:3px; left:70%; animation-delay:0s; animation-duration:11s;"></div>
-        <div class="particle" style="width:5px; height:5px; left:85%; animation-delay:7s; animation-duration:15s;"></div>
-        
-        <div>
-          <h1 class="title">🌌 Welcome to the Control Room</h1>
-          <div class="subtitle">Executing: Main.Systems.Initialize()</div>
+      <div class="hud-container">
+        <!-- Ambient Background -->
+        <div class="ambient-core"></div>
+        <div class="ambient-node"></div>
+        <div class="grid-layer"></div>
+
+        <!-- Slow Moving Data Streams -->
+        <div class="data-stream" style="left: 80%; height: 60px; animation: dataFall 12s linear infinite 0s;"></div>
+        <div class="data-stream" style="left: 85%; height: 120px; animation: dataFall 18s linear infinite 5s;"></div>
+        <div class="data-stream" style="left: 90%; height: 40px; animation: dataFall 15s linear infinite 2s;"></div>
+        <div class="data-stream" style="left: 95%; height: 90px; animation: dataFall 22s linear infinite 8s;"></div>
+
+        <!-- HUD Framing -->
+        <div class="hud-frame">
+          <div class="hud-corner tl"></div>
+          <div class="hud-corner tr"></div>
+          <div class="hud-corner bl"></div>
+          <div class="hud-corner br"></div>
         </div>
+
+        <!-- Content Matrix -->
+        <div class="content-wrapper">
+          <div class="sys-badge">System.Root.Access_Granted</div>
+          <h1 class="title">DripsAin Control Room</h1>
+          <h2 class="subtitle">>>> INITIALIZING DSP PIPELINES...</h2>
+          
+          <div class="terminal-block">
+            <div class="terminal-text">
+              > [LOG] : Scanning developer ecosystem...<br/>
+              > [USER_BIO] : <span>"through out all coders and developers, i am the sane one."</span><br/>
+              > [STATUS] : Architecture online. Computing metrics...<br/>
+              > [ENV] : Native OS / Low-level bindings active.
+            </div>
+          </div>
+        </div>
+        
+        <!-- Graphical Decorative Elements -->
+        <svg x="750" y="250" width="200" height="100">
+          <rect x="0" y="40" width="150" height="2" fill="#4a2b9a" opacity="0.5"/>
+          <rect x="150" y="38" width="6" height="6" fill="#3a70ff"/>
+          <text x="0" y="30" fill="#64748b" font-family="monospace" font-size="10">NODE_BETA_ACTIVE</text>
+          <text x="0" y="60" fill="#3a70ff" font-family="monospace" font-size="10">0x7F8B99A0</text>
+        </svg>
       </div>
     </div>
   </foreignObject>
