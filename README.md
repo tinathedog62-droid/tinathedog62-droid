@@ -1,6 +1,6 @@
 <div align="center">
 
-![DripsAin Banner](./dripsain_banner.svg)
+![DripsAin Banner](./header.svg)
 
 </div>
 
