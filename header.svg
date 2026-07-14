@@ -1,4 +1,3 @@
-cat > /mnt/user-data/outputs/dripsain_banner.svg << 'SVGEOF'
 <svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
   <defs>
 
@@ -282,5 +281,3 @@ cat > /mnt/user-data/outputs/dripsain_banner.svg << 'SVGEOF'
 
   </g><!-- end clip group -->
 </svg>
-SVGEOF
-echo "SVG done"
