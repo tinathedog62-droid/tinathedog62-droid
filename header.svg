@@ -1,129 +1,286 @@
-<svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" font-family="monospace">
+cat > /mnt/user-data/outputs/dripsain_banner.svg << 'SVGEOF'
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="grain">
-      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
-      <feColorMatrix type="saturate" values="0"/>
-      <feBlend in="SourceGraphic" mode="multiply" result="blend"/>
-      <feComposite in="blend" in2="SourceGraphic" operator="in"/>
+
+    <!-- Background gradient: cream-grey from the profile photo -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e9e5de"/>
+      <stop offset="55%" stop-color="#dedad3"/>
+      <stop offset="100%" stop-color="#cec9c1"/>
+    </linearGradient>
+
+    <!-- Grain texture filter -->
+    <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grey"/>
+      <feBlend in="SourceGraphic" in2="grey" mode="multiply" result="blended"/>
+      <feComposite in="blended" in2="SourceGraphic" operator="in"/>
     </filter>
+
+    <!-- Ink roughen for sketch feel -->
     <filter id="roughen">
-      <feTurbulence type="turbulence" baseFrequency="0.02 0.08" numOctaves="2" seed="3" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
+      <feTurbulence type="turbulence" baseFrequency="0.018 0.06" numOctaves="3" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
-    <filter id="ink-blur">
-      <feGaussianBlur stdDeviation="0.4"/>
+
+    <!-- Soft glow for animated sparks -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#e8e4dd"/>
-      <stop offset="50%" stop-color="#dedad3"/>
-      <stop offset="100%" stop-color="#d4d0c9"/>
-    </linearGradient>
-    <linearGradient id="ink-fade" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#1a1a2e" stop-opacity="0.9"/>
-      <stop offset="70%" stop-color="#1a1a2e" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#1a1a2e" stop-opacity="0.3"/>
-    </linearGradient>
-    <marker id="sp" markerWidth="4" markerHeight="4" refX="2" refY="2">
-      <polygon points="2,0 4,2 2,4 0,2" fill="#1a1a2e" opacity="0.7"/>
-    </marker>
+
+    <!-- Clip the whole banner -->
+    <clipPath id="bounds">
+      <rect width="900" height="500"/>
+    </clipPath>
+
   </defs>
 
-  <!-- Background: muted cream-grey like the profile photo -->
-  <rect width="900" height="280" fill="url(#bg-grad)"/>
-  <!-- Subtle noise texture overlay -->
-  <rect width="900" height="280" fill="#c8c4bd" opacity="0.08" filter="url(#grain)"/>
+  <!-- ═══════════════════════════════════════════
+       BACKGROUND LAYER
+  ═══════════════════════════════════════════ -->
+  <g clip-path="url(#bounds)">
+    <rect width="900" height="500" fill="url(#bg)"/>
+    <!-- grain overlay -->
+    <rect width="900" height="500" fill="#b8b4ae" opacity="0.09" filter="url(#grain)"/>
 
-  <!-- ── DS monogram, hand-sketch style, top-left ── -->
-  <g transform="translate(42, 38)" filter="url(#roughen)" opacity="0.92">
-    <!-- D shape: outer strokes -->
-    <line x1="0" y1="2" x2="2" y2="68" stroke="#1a1a2e" stroke-width="3.2" stroke-linecap="round"/>
-    <line x1="0" y1="3" x2="28" y2="0" stroke="#1a1a2e" stroke-width="2.8" stroke-linecap="round"/>
-    <line x1="1" y1="67" x2="30" y2="70" stroke="#1a1a2e" stroke-width="2.6" stroke-linecap="round"/>
-    <line x1="27" y1="1" x2="42" y2="18" stroke="#1a1a2e" stroke-width="2.4" stroke-linecap="round"/>
-    <line x1="30" y1="69" x2="44" y2="54" stroke="#1a1a2e" stroke-width="2.4" stroke-linecap="round"/>
-    <line x1="41" y1="19" x2="45" y2="35" stroke="#1a1a2e" stroke-width="2.3" stroke-linecap="round"/>
-    <line x1="44" y1="53" x2="46" y2="36" stroke="#1a1a2e" stroke-width="2.3" stroke-linecap="round"/>
-    <!-- D inner parallel for depth -->
-    <line x1="5" y1="10" x2="6" y2="58" stroke="#1a1a2e" stroke-width="1.2" stroke-linecap="round" opacity="0.45"/>
-    <line x1="5" y1="11" x2="24" y2="9" stroke="#1a1a2e" stroke-width="1.1" stroke-linecap="round" opacity="0.4"/>
-    <line x1="6" y1="57" x2="25" y2="60" stroke="#1a1a2e" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
-    <!-- star spark at vertex -->
-    <line x1="26" y1="1" x2="32" y2="-6" stroke="#1a1a2e" stroke-width="1.3" stroke-linecap="round" opacity="0.7"/>
-    <line x1="28" y1="0" x2="20" y2="-5" stroke="#1a1a2e" stroke-width="1" stroke-linecap="round" opacity="0.55"/>
-    <line x1="28" y1="0" x2="34" y2="5" stroke="#1a1a2e" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
-
-    <!-- S shape: diamond-ish, offset right -->
-    <g transform="translate(62, 0)">
-      <!-- top diamond -->
-      <line x1="14" y1="0" x2="34" y2="0" stroke="#1a1a2e" stroke-width="2.8" stroke-linecap="round"/>
-      <line x1="14" y1="1" x2="0" y2="16" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="34" y1="1" x2="48" y2="16" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="1" y1="17" x2="47" y2="17" stroke="#1a1a2e" stroke-width="2.6" stroke-linecap="round"/>
-      <!-- bottom diamond -->
-      <line x1="1" y1="52" x2="47" y2="52" stroke="#1a1a2e" stroke-width="2.6" stroke-linecap="round"/>
-      <line x1="0" y1="52" x2="14" y2="68" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="48" y1="52" x2="34" y2="68" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="15" y1="69" x2="33" y2="69" stroke="#1a1a2e" stroke-width="2.7" stroke-linecap="round"/>
-      <!-- connecting diagonal -->
-      <line x1="2" y1="17" x2="46" y2="52" stroke="#1a1a2e" stroke-width="2.3" stroke-linecap="round"/>
-      <!-- inner depth lines -->
-      <line x1="14" y1="5" x2="34" y2="5" stroke="#1a1a2e" stroke-width="1" stroke-linecap="round" opacity="0.35"/>
-      <line x1="8" y1="17" x2="40" y2="17" stroke="#1a1a2e" stroke-width="0.8" stroke-linecap="round" opacity="0.3"/>
-      <!-- star sparks at vertices -->
-      <line x1="14" y1="0" x2="8" y2="-7" stroke="#1a1a2e" stroke-width="1.4" stroke-linecap="round" opacity="0.75"/>
-      <line x1="14" y1="0" x2="10" y2="5" stroke="#1a1a2e" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
-      <line x1="34" y1="0" x2="40" y2="-7" stroke="#1a1a2e" stroke-width="1.4" stroke-linecap="round" opacity="0.75"/>
-      <line x1="34" y1="0" x2="38" y2="5" stroke="#1a1a2e" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
-      <line x1="47" y1="52" x2="54" y2="58" stroke="#1a1a2e" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/>
-      <line x1="47" y1="52" x2="54" y2="46" stroke="#1a1a2e" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
-      <line x1="0" y1="52" x2="-7" y2="46" stroke="#1a1a2e" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/>
+    <!-- ── Very faint geometric grid lines, architectural feel ── -->
+    <g stroke="#1a1a2e" stroke-width="0.5" opacity="0.055" stroke-linecap="round">
+      <!-- diagonal crossing lines, like a drafting board -->
+      <line x1="0" y1="0" x2="900" y2="500"/>
+      <line x1="900" y1="0" x2="0" y2="500"/>
+      <line x1="450" y1="0" x2="450" y2="500"/>
+      <line x1="0" y1="250" x2="900" y2="250"/>
+      <!-- extra diagonals for depth -->
+      <line x1="0" y1="125" x2="900" y2="375"/>
+      <line x1="0" y1="375" x2="900" y2="125"/>
     </g>
-  </g>
 
-  <!-- ── Vertical divider line, ink-drawn style ── -->
-  <line x1="230" y1="30" x2="228" y2="250" stroke="#1a1a2e" stroke-width="1.1" stroke-linecap="round" opacity="0.22" filter="url(#roughen)"/>
+    <!-- ── Faint large DS ghost letters filling background ── -->
+    <text x="85" y="430" font-family="'Courier New', Courier, monospace"
+          font-size="420" font-weight="900" fill="#1a1a2e" opacity="0.028"
+          letter-spacing="-20" filter="url(#roughen)">DS</text>
 
-  <!-- ── Name & tagline text block ── -->
-  <text x="258" y="88" font-family="'Courier New', Courier, monospace" font-size="38" font-weight="700" fill="#1a1a2e" opacity="0.88" letter-spacing="-1" filter="url(#roughen)">DripsAin</text>
+    <!-- ═══════════════════════════════════════════
+         ANIMATED FLOATING SPARK ELEMENTS
+         (slow, ambient, not distracting)
+    ═══════════════════════════════════════════ -->
 
-  <!-- thin underline, hand-drawn feel -->
-  <path d="M258,96 Q400,100 540,95" stroke="#1a1a2e" stroke-width="1.2" fill="none" opacity="0.25" stroke-linecap="round"/>
+    <!-- Spark 1 — top right area -->
+    <g filter="url(#glow)" opacity="0">
+      <g transform="translate(760,80)">
+        <line x1="0" y1="-14" x2="0" y2="14" stroke="#1a1a2e" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="-14" y1="0" x2="14" y2="0" stroke="#1a1a2e" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="-9" y1="-9" x2="9" y2="9" stroke="#1a1a2e" stroke-width="1" stroke-linecap="round"/>
+        <line x1="9" y1="-9" x2="-9" y2="9" stroke="#1a1a2e" stroke-width="1" stroke-linecap="round"/>
+      </g>
+      <animateTransform attributeName="transform" type="translate" values="0,0;0,-6;0,0" dur="4.8s" repeatCount="indefinite" additive="sum"/>
+      <animate attributeName="opacity" values="0;0.28;0.18;0.28;0" dur="4.8s" repeatCount="indefinite"/>
+    </g>
 
-  <text x="260" y="130" font-family="'Courier New', Courier, monospace" font-size="13" fill="#1a1a2e" opacity="0.58" letter-spacing="2.5">BUILDER · MAKER · TINKERER</text>
+    <!-- Spark 2 — mid left -->
+    <g filter="url(#glow)" opacity="0">
+      <g transform="translate(68,310)">
+        <line x1="0" y1="-10" x2="0" y2="10" stroke="#1a1a2e" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="-10" y1="0" x2="10" y2="0" stroke="#1a1a2e" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="-6" y1="-6" x2="6" y2="6" stroke="#1a1a2e" stroke-width="0.9" stroke-linecap="round"/>
+        <line x1="6" y1="-6" x2="-6" y2="6" stroke="#1a1a2e" stroke-width="0.9" stroke-linecap="round"/>
+      </g>
+      <animateTransform attributeName="transform" type="translate" values="0,0;0,5;0,0" dur="6.2s" repeatCount="indefinite" additive="sum"/>
+      <animate attributeName="opacity" values="0;0.22;0.12;0.22;0" dur="6.2s" begin="1.5s" repeatCount="indefinite"/>
+    </g>
 
-  <!-- ── Keyword chips ── -->
-  <g font-family="'Courier New', Courier, monospace" font-size="11" fill="#1a1a2e" opacity="0.72" filter="url(#roughen)">
-    <!-- chip backgrounds, slightly off-white -->
-    <rect x="259" y="155" width="86" height="22" rx="2" fill="#1a1a2e" opacity="0.07"/>
-    <text x="267" y="170" letter-spacing="1">3D / Blender</text>
+    <!-- Spark 3 — bottom right -->
+    <g filter="url(#glow)" opacity="0">
+      <g transform="translate(840,400)">
+        <line x1="0" y1="-12" x2="0" y2="12" stroke="#1a1a2e" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="-12" y1="0" x2="12" y2="0" stroke="#1a1a2e" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="-7" y1="-7" x2="7" y2="7" stroke="#1a1a2e" stroke-width="0.9" stroke-linecap="round"/>
+        <line x1="7" y1="-7" x2="-7" y2="7" stroke="#1a1a2e" stroke-width="0.9" stroke-linecap="round"/>
+      </g>
+      <animateTransform attributeName="transform" type="translate" values="0,0;-4,-4;0,0" dur="5.5s" repeatCount="indefinite" additive="sum"/>
+      <animate attributeName="opacity" values="0;0.24;0.14;0.24;0" dur="5.5s" begin="3s" repeatCount="indefinite"/>
+    </g>
 
-    <rect x="355" y="155" width="100" height="22" rx="2" fill="#1a1a2e" opacity="0.07"/>
-    <text x="363" y="170" letter-spacing="1">Electronics</text>
+    <!-- Spark 4 — center top area, small -->
+    <g filter="url(#glow)" opacity="0">
+      <g transform="translate(490,55)">
+        <line x1="0" y1="-8" x2="0" y2="8" stroke="#1a1a2e" stroke-width="1.1" stroke-linecap="round"/>
+        <line x1="-8" y1="0" x2="8" y2="0" stroke="#1a1a2e" stroke-width="1.1" stroke-linecap="round"/>
+        <line x1="-5" y1="-5" x2="5" y2="5" stroke="#1a1a2e" stroke-width="0.7" stroke-linecap="round"/>
+        <line x1="5" y1="-5" x2="-5" y2="5" stroke="#1a1a2e" stroke-width="0.7" stroke-linecap="round"/>
+      </g>
+      <animateTransform attributeName="transform" type="translate" values="0,0;3,4;0,0" dur="7s" repeatCount="indefinite" additive="sum"/>
+      <animate attributeName="opacity" values="0;0.2;0.1;0.2;0" dur="7s" begin="0.8s" repeatCount="indefinite"/>
+    </g>
 
-    <rect x="465" y="155" width="108" height="22" rx="2" fill="#1a1a2e" opacity="0.07"/>
-    <text x="473" y="170" letter-spacing="1">Video Editing</text>
+    <!-- ── Animated slow-drifting horizontal rule ── -->
+    <path d="M42,462 Q450,458 858,462" stroke="#1a1a2e" stroke-width="1" fill="none" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.12;0.2;0.12" dur="5s" repeatCount="indefinite"/>
+    </path>
 
-    <rect x="583" y="155" width="122" height="22" rx="2" fill="#1a1a2e" opacity="0.07"/>
-    <text x="591" y="170" letter-spacing="1">RPi / ESP32</text>
+    <!-- ═══════════════════════════════════════════
+         LARGE DS MONOGRAM — main left block
+         Bigger, bolder, hand-sketch angular
+    ═══════════════════════════════════════════ -->
+    <g transform="translate(48, 100)" filter="url(#roughen)">
 
-    <rect x="715" y="155" width="62" height="22" rx="2" fill="#1a1a2e" opacity="0.07"/>
-    <text x="723" y="170" letter-spacing="1">WASM</text>
-  </g>
+      <!-- ── D letter (big, tall, angular) ── -->
+      <g stroke="#1a1a2e" stroke-linecap="round" fill="none">
+        <!-- spine -->
+        <line x1="0" y1="0" x2="3" y2="200" stroke-width="5.5"/>
+        <!-- top bar -->
+        <line x1="0" y1="1" x2="72" y2="0" stroke-width="5"/>
+        <!-- bottom bar -->
+        <line x1="3" y1="199" x2="74" y2="202" stroke-width="4.8"/>
+        <!-- upper diagonal -->
+        <line x1="71" y1="1" x2="118" y2="52" stroke-width="4.2"/>
+        <!-- lower diagonal -->
+        <line x1="74" y1="201" x2="120" y2="152" stroke-width="4.2"/>
+        <!-- right spine segment -->
+        <line x1="117" y1="53" x2="122" y2="100" stroke-width="4"/>
+        <line x1="121" y1="151" x2="123" y2="101" stroke-width="4"/>
+        <!-- inner depth shadow lines -->
+        <line x1="10" y1="18" x2="12" y2="180" stroke-width="2" opacity="0.32"/>
+        <line x1="10" y1="19" x2="62" y2="17" stroke-width="1.8" opacity="0.28"/>
+        <line x1="12" y1="179" x2="64" y2="182" stroke-width="1.6" opacity="0.26"/>
+        <line x1="62" y1="18" x2="100" y2="60" stroke-width="1.5" opacity="0.24"/>
+        <line x1="64" y1="181" x2="102" y2="144" stroke-width="1.5" opacity="0.24"/>
+        <!-- Spark at top corner of D -->
+        <line x1="71" y1="1" x2="82" y2="-16" stroke-width="2.2" opacity="0.8"/>
+        <line x1="71" y1="0" x2="55" y2="-12" stroke-width="1.6" opacity="0.6"/>
+        <line x1="72" y1="1" x2="82" y2="12" stroke-width="1.5" opacity="0.55"/>
+        <line x1="72" y1="1" x2="60" y2="10" stroke-width="1.2" opacity="0.45"/>
+      </g>
 
-  <!-- ── Bottom tagline ── -->
-  <text x="260" y="220" font-family="'Courier New', Courier, monospace" font-size="12" fill="#1a1a2e" opacity="0.40" letter-spacing="1.5">hobby-scale. production-thinking.</text>
+      <!-- ── S letter: double-diamond, angular ── -->
+      <g transform="translate(155, 0)" stroke="#1a1a2e" stroke-linecap="round" fill="none">
+        <!-- top diamond -->
+        <line x1="30" y1="0" x2="86" y2="0" stroke-width="5"/>
+        <line x1="30" y1="2" x2="0" y2="46" stroke-width="4.5"/>
+        <line x1="86" y1="2" x2="118" y2="46" stroke-width="4.5"/>
+        <line x1="2" y1="47" x2="116" y2="47" stroke-width="4.8"/>
+        <!-- bottom diamond -->
+        <line x1="2" y1="155" x2="116" y2="155" stroke-width="4.8"/>
+        <line x1="2" y1="155" x2="30" y2="202" stroke-width="4.5"/>
+        <line x1="116" y1="155" x2="86" y2="202" stroke-width="4.5"/>
+        <line x1="31" y1="203" x2="85" y2="203" stroke-width="5"/>
+        <!-- connecting slash -->
+        <line x1="4" y1="48" x2="115" y2="154" stroke-width="4.2"/>
+        <!-- inner depth lines -->
+        <line x1="30" y1="8" x2="86" y2="8" stroke-width="1.5" opacity="0.3"/>
+        <line x1="14" y1="47" x2="104" y2="47" stroke-width="1.2" opacity="0.25"/>
+        <line x1="14" y1="155" x2="104" y2="155" stroke-width="1.2" opacity="0.25"/>
+        <!-- Sparks -->
+        <!-- top-left -->
+        <line x1="30" y1="1" x2="18" y2="-16" stroke-width="2.2" opacity="0.82"/>
+        <line x1="30" y1="1" x2="14" y2="8" stroke-width="1.5" opacity="0.55"/>
+        <line x1="30" y1="1" x2="36" y2="-10" stroke-width="1.5" opacity="0.5"/>
+        <!-- top-right -->
+        <line x1="86" y1="1" x2="98" y2="-16" stroke-width="2.2" opacity="0.82"/>
+        <line x1="86" y1="1" x2="100" y2="8" stroke-width="1.5" opacity="0.55"/>
+        <line x1="86" y1="1" x2="80" y2="-10" stroke-width="1.5" opacity="0.5"/>
+        <!-- mid-right corner spark -->
+        <line x1="116" y1="155" x2="130" y2="162" stroke-width="2" opacity="0.7"/>
+        <line x1="116" y1="155" x2="130" y2="146" stroke-width="1.6" opacity="0.55"/>
+        <line x1="116" y1="155" x2="108" y2="166" stroke-width="1.3" opacity="0.45"/>
+        <!-- mid-left corner spark -->
+        <line x1="2" y1="48" x2="-12" y2="40" stroke-width="1.8" opacity="0.65"/>
+        <line x1="2" y1="48" x2="-10" y2="56" stroke-width="1.4" opacity="0.5"/>
+      </g>
 
-  <!-- ── Decorative corner scratch marks ── -->
-  <g stroke="#1a1a2e" stroke-linecap="round" opacity="0.18" filter="url(#roughen)">
-    <!-- bottom right corner ornament -->
-    <line x1="830" y1="240" x2="875" y2="240" stroke-width="1.5"/>
-    <line x1="875" y1="215" x2="875" y2="240" stroke-width="1.5"/>
-    <line x1="852" y1="240" x2="875" y2="217" stroke-width="1"/>
-    <!-- top right -->
-    <line x1="855" y1="30" x2="885" y2="30" stroke-width="1.2"/>
-    <line x1="885" y1="30" x2="885" y2="58" stroke-width="1.2"/>
-  </g>
+    </g><!-- end monogram group -->
 
-  <!-- ── Subtle horizontal rule near bottom ── -->
-  <path d="M42,250 Q450,247 858,250" stroke="#1a1a2e" stroke-width="0.8" fill="none" opacity="0.15" stroke-linecap="round"/>
+    <!-- ── Animated stroke draw-on for a horizontal divider after DS ── -->
+    <line x1="48" y1="338" x2="380" y2="338" stroke="#1a1a2e" stroke-width="1.2" stroke-linecap="round" opacity="0.2">
+      <animate attributeName="stroke-dashoffset" from="340" to="0" dur="1.8s" fill="freeze" begin="0.4s"/>
+      <animate attributeName="stroke-dasharray" from="340 340" to="340 340" dur="0.01s" fill="freeze"/>
+    </line>
+
+    <!-- ═══════════════════════════════════════════
+         RIGHT TEXT BLOCK
+    ═══════════════════════════════════════════ -->
+
+    <!-- Name: big, bold mono -->
+    <text x="420" y="198"
+          font-family="'Courier New', Courier, monospace"
+          font-size="72" font-weight="900"
+          fill="#1a1a2e" opacity="0.87"
+          letter-spacing="-2"
+          filter="url(#roughen)">DripsAin</text>
+
+    <!-- subtle hand-drawn underline that animates in -->
+    <path d="M420,210 Q620,216 800,209" stroke="#1a1a2e" stroke-width="1.4" fill="none" stroke-linecap="round">
+      <animate attributeName="stroke-dasharray" from="0 400" to="400 0" dur="1.4s" begin="0.3s" fill="freeze"/>
+      <animate attributeName="opacity" values="0;0.3;0.3" dur="1.4s" begin="0.3s" fill="freeze"/>
+    </path>
+
+    <!-- Tagline -->
+    <text x="422" y="252"
+          font-family="'Courier New', Courier, monospace"
+          font-size="15" fill="#1a1a2e" opacity="0.52"
+          letter-spacing="4">BUILDER · MAKER · TINKERER</text>
+
+    <!-- ── Domain tags, stacked cleanly ── -->
+    <g font-family="'Courier New', Courier, monospace" font-size="13" fill="#1a1a2e">
+
+      <!-- tag 1 -->
+      <rect x="420" y="278" width="118" height="26" rx="2" fill="#1a1a2e" opacity="0.07"/>
+      <rect x="420" y="278" width="118" height="26" rx="2" fill="none" stroke="#1a1a2e" stroke-width="0.7" opacity="0.18"/>
+      <text x="432" y="296" opacity="0.68" letter-spacing="1">3D / Blender</text>
+
+      <!-- tag 2 -->
+      <rect x="548" y="278" width="116" height="26" rx="2" fill="#1a1a2e" opacity="0.07"/>
+      <rect x="548" y="278" width="116" height="26" rx="2" fill="none" stroke="#1a1a2e" stroke-width="0.7" opacity="0.18"/>
+      <text x="560" y="296" opacity="0.68" letter-spacing="1">Electronics</text>
+
+      <!-- tag 3 -->
+      <rect x="674" y="278" width="126" height="26" rx="2" fill="#1a1a2e" opacity="0.07"/>
+      <rect x="674" y="278" width="126" height="26" rx="2" fill="none" stroke="#1a1a2e" stroke-width="0.7" opacity="0.18"/>
+      <text x="686" y="296" opacity="0.68" letter-spacing="1">Video Edit</text>
+
+      <!-- tag 4 -->
+      <rect x="420" y="314" width="130" height="26" rx="2" fill="#1a1a2e" opacity="0.07"/>
+      <rect x="420" y="314" width="130" height="26" rx="2" fill="none" stroke="#1a1a2e" stroke-width="0.7" opacity="0.18"/>
+      <text x="432" y="332" opacity="0.68" letter-spacing="1">RPi / ESP32</text>
+
+      <!-- tag 5 -->
+      <rect x="560" y="314" width="90" height="26" rx="2" fill="#1a1a2e" opacity="0.07"/>
+      <rect x="560" y="314" width="90" height="26" rx="2" fill="none" stroke="#1a1a2e" stroke-width="0.7" opacity="0.18"/>
+      <text x="572" y="332" opacity="0.68" letter-spacing="1">Rust/WASM</text>
+
+    </g>
+
+    <!-- ── Bottom line: the slogan, animated fade in ── -->
+    <text x="420" y="420"
+          font-family="'Courier New', Courier, monospace"
+          font-size="13" fill="#1a1a2e" letter-spacing="2.5">
+      <tspan opacity="0">hobby-scale. production-thinking.
+        <animate attributeName="opacity" values="0;0.38" dur="1.2s" begin="1s" fill="freeze"/>
+      </tspan>
+    </text>
+
+    <!-- ── Corner ornaments (hand-drawn angular brackets) ── -->
+    <g stroke="#1a1a2e" stroke-linecap="round" opacity="0.18">
+      <!-- top-left -->
+      <line x1="20" y1="20" x2="56" y2="20" stroke-width="1.5"/>
+      <line x1="20" y1="20" x2="20" y2="56" stroke-width="1.5"/>
+      <!-- top-right -->
+      <line x1="880" y1="20" x2="844" y2="20" stroke-width="1.5"/>
+      <line x1="880" y1="20" x2="880" y2="56" stroke-width="1.5"/>
+      <!-- bottom-left -->
+      <line x1="20" y1="480" x2="56" y2="480" stroke-width="1.5"/>
+      <line x1="20" y1="480" x2="20" y2="444" stroke-width="1.5"/>
+      <!-- bottom-right -->
+      <line x1="880" y1="480" x2="844" y2="480" stroke-width="1.5"/>
+      <line x1="880" y1="480" x2="880" y2="444" stroke-width="1.5"/>
+    </g>
+
+    <!-- ── Vertical divider between monogram and text ── -->
+    <line x1="395" y1="80" x2="392" y2="440" stroke="#1a1a2e" stroke-width="1"
+          stroke-linecap="round" opacity="0.14" filter="url(#roughen)"/>
+
+  </g><!-- end clip group -->
 </svg>
+SVGEOF
+echo "SVG done"
